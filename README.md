@@ -1,11 +1,21 @@
 This repo is under development.
 
-It's based on DSO.
+It's based on [DSO](https://github.com/JakobEngel/dso).
 
 Run RNNSLAM (DSO+RNN):
 In .
 ```
-./bin/dso_dataset mode=2 preset=0 files=~/Datasets/COLON_RNNSLAM_TEST/sequences/031/image calib=~/Datasets/COLON_RNNSLAM_TEST/sequences/calib_270_216.txt rnn=~/software/dso/src/RNN rnnmodel=~/Datasets/COLON_RNNSLAM_TEST/models/model-145000 numRNNBootstrap=9 lostTolerance=5 output_prefix=/home/ruibinma/Datasets/COLON_RNNSLAM_TEST/sequences/031/ quiet=1 sampleoutput=1
+./bin/dso_dataset \
+mode=2 \
+preset=0 \
+files=~/Datasets/COLON_RNNSLAM_TEST/sequences/031/image \
+calib=~/Datasets/COLON_RNNSLAM_TEST/sequences/calib_270_216.txt \
+rnn=~/software/dso/src/RNN rnnmodel=~/Datasets/COLON_RNNSLAM_TEST/models/model-145000 \
+numRNNBootstrap=9 \
+lostTolerance=5 \
+output_prefix=/home/ruibinma/Datasets/COLON_RNNSLAM_TEST/sequences/031/ \
+quiet=1 \
+sampleoutput=1
 ```
 
 Run depth map refining
