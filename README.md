@@ -3,7 +3,8 @@ This repo is under development.
 It's based on [DSO](https://github.com/JakobEngel/dso).
 
 Run RNNSLAM (DSO+RNN):
-In .
+
+In ./
 ```
 ./bin/dso_dataset \
 mode=2 \
@@ -19,6 +20,7 @@ sampleoutput=1
 ```
 
 Run depth map refining
+
 In ./python/windowed_depth_average/
 ```
 python main.py \
@@ -33,6 +35,7 @@ python main.py \
 ```
 
 Convert dso output to tumrgbd format
+
 In ./python/
 ```
 python cvt_colon_to_tumrgbd.py \
@@ -49,6 +52,7 @@ python cvt_colon_to_tumrgbd.py \
 ```
 
 Run surfelmeshing
+
 This program is not in this repository, you need to download [SurfelMeshing](https://github.com/puzzlepaint/surfelmeshing)
 ```
 ./SurfelMeshing \
