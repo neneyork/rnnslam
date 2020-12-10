@@ -3,7 +3,7 @@ import cv2
 import os, glob
 import numpy as np
 from pose_evaluation_utils import *
-import scipy
+import imageio
 from util import *
 import struct
 from utils_lr import projective_inverse_warp
@@ -171,13 +171,13 @@ class RNN_depth_pred:
 
 
     def predict(self, image_name, relative=True):
+        # path modification for mixed lighting
+        image_name = image_name.replace('img_corr', 'image')
+        parts = image_name.split('/')
+        parts[-2] = 'image'
+        image_name = '/'.join(parts)
 
-        ##### modify image path
-        # parts = image_name.split('/')
-        # parts[-2] = parts[-2][:5]
-        # image_name = '/'.join(parts)
-
-        self.curr_img = scipy.misc.imread(image_name)
+        self.curr_img = imageio.imread(image_name)
         self.curr_img = self.curr_img/255
 
 
@@ -250,7 +250,12 @@ class RNN_depth_pred:
         self.hidden_state_pose = self.new_hidden_state_pose
 
     def assign_keyframe_by_path(self,imagepath):
-        curr_img = scipy.misc.imread(imagepath)
+        # path modification for mixed lighting
+        parts = imagepath.split('/')
+        parts[-2] = 'image'
+        imagepath = '/'.join(parts)
+
+        curr_img = imageio.imread(imagepath)
         curr_img = curr_img/255.     
         self.keyframe = curr_img
 
