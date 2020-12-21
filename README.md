@@ -2,6 +2,18 @@ This repo is under development.
 
 It's based on [DSO](https://github.com/JakobEngel/dso).
 
+Rnn lighting adjustment:
+
+In ./
+```
+python LightAdjust/code/test.py --chunk /path/to/sequences/seq_id/image/ \
+--model_name gamma_thru10_first2prev2_ssimALL \
+--gpu 0 --num_adj=1 \
+--seq_num=10 \
+--exp_patch=32 \
+--epochs=7
+```
+
 Run RNNSLAM (DSO+RNN):
 
 In ./
