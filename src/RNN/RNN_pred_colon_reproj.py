@@ -3,7 +3,7 @@ import cv2
 import os, glob
 import numpy as np
 from pose_evaluation_utils import *
-import imageio
+import scipy
 from util import *
 import struct
 from utils_lr import projective_inverse_warp
@@ -170,16 +170,18 @@ class RNN_depth_pred:
 
 
 
-    def predict(self, image_name, relative=True):
-        # path modification for mixed lighting
-        image_name = image_name.replace('img_corr', 'image')
-        parts = image_name.split('/')
-        parts[-2] = 'image'
-        image_name = '/'.join(parts)
+    def predict(self, image_name, relative=True, image=None):
 
-        self.curr_img = imageio.imread(image_name)
-        self.curr_img = self.curr_img/255
+        ##### modify image path
+        # parts = image_name.split('/')
+        # parts[-2] = parts[-2][:5]
+        # image_name = '/'.join(parts)
 
+        if image is None:
+            self.curr_img = scipy.misc.imread(image_name)
+            self.curr_img = self.curr_img/255
+        else:
+            self.curr_img = image / 255.
 
         My_feed = {
                      self.image_tf: np.expand_dims(self.curr_img, axis=0),
@@ -227,7 +229,7 @@ class RNN_depth_pred:
         pose_tum = [qw, qx, qy, qz, tx, ty, tz]
 
         depth = 1.0/pred_depth[0,:,:,0]
-        print('Predicted depth map: [{}x{}]'.format(depth.shape[0], depth.shape[1]))
+        # print('Predicted depth map: [{}x{}]'.format(depth.shape[0], depth.shape[1]))
         if self.output_dir is not None:
             image_basename = os.path.basename(image_name)
             depth_output_path = os.path.join(self.output_dir, image_basename + '.depth.bin')
@@ -249,14 +251,12 @@ class RNN_depth_pred:
         self.hidden_state = self.new_hidden_state
         self.hidden_state_pose = self.new_hidden_state_pose
 
-    def assign_keyframe_by_path(self,imagepath):
-        # path modification for mixed lighting
-        parts = imagepath.split('/')
-        parts[-2] = 'image'
-        imagepath = '/'.join(parts)
-
-        curr_img = imageio.imread(imagepath)
-        curr_img = curr_img/255.     
+    def assign_keyframe_by_path(self, imagepath, image=None):
+        if image is None:
+            curr_img = scipy.misc.imread(imagepath)
+            curr_img = curr_img/255.
+        else:
+            curr_img = image/255.
         self.keyframe = curr_img
 
 #=========================
